@@ -12,7 +12,7 @@ const sellSchema = new Schema({
         required: true
     },
     Area:{
-        type : Number ,
+        type : String,
         required: true
     },
     Price: {

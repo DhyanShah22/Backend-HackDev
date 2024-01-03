@@ -2,7 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const   SellerRoutes = require('./Routes/sellAuthRoutes')
+const  SellerRoutes = require('./Routes/sellAuthRoutes')
+const sellpath = require('./Routes/sellRoutes')
 const app = express()
 
 app.use(express.json())
@@ -12,6 +13,7 @@ app.use((req,res,next) => {
     next()
 })
 app.use('/api/Seller', SellerRoutes)
+app.use('/api/sellProp', sellpath)
 
 mongoose.connect(process.env.MONG_URI)
     .then(() => {
