@@ -2,24 +2,17 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createCustomer = async(req,res)=>{
     try{
-    const {email,payment_method_token,subscription_interval} = req.body;
+    const {email,payment_method_id,subscription_interval} = req.body;
     if(!email || !payment_method_token){
         return res.status(400).json({error:"Email and Payment Method are required"});
         }    
-    //create a paymentMethod using the token generated on the frontend
-    const paymentMethod = await stripe.paymentMethods.create({
-        type: 'card',
-        card: {
-            token:payment_method_token
-        }
-    });
-    // console.log(paymentMethod);
+    
     //create a customer using the paymentMethod
     const customer = await stripe.customers.create({
             email,
-            payment_method:paymentMethod.id,
+            payment_method:payment_method_id,
             invoice_settings:{
-                default_payment_method:paymentMethod.id
+                default_payment_method:payment_method_id
             }
         });
     
